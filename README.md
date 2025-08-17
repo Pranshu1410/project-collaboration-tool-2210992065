@@ -59,4 +59,4 @@ Managing group projects is chaotic—tasks in chats, random sheets for status, a
 - A user can be in multiple teams
 - Teams have multiple users/projects
 - Each project has many tasks
-- All changes and assignments are tracked and can trigger notifications 
+- All changes and assignments are tracked and can trigger notifications
