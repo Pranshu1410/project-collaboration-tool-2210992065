@@ -60,3 +60,45 @@ Managing group projects is chaotic—tasks in chats, random sheets for status, a
 - Teams have multiple users/projects
 - Each project has many tasks
 - All changes and assignments are tracked and can trigger notifications
+
+# 🧑‍💻 Teamwork & Task Division
+
+Our team of four divided the entire backend system in a systematic and modular way, ensuring every feature was handled thoroughly and by a dedicated owner.
+
+## 🔥 Task Breakdown by Team Member
+
+| Team Member | Files/Modules Handled | Description |
+|-------------|-----------------------|-------------|
+| *Pranshu* (Leader) | authcontroller.js, user.js, authroute.js, authmiddleware.js | Designed and implemented complete authentication & user module using JWT; protected private routes and set up login/signup APIs. |
+| *Krishna* | projectcontroller.js, project.js, projectroutes.js | Built the project management module: project creation, management, linking projects to teams, and respective APIs. |
+| *Paras*   | teamcontroller.js, team.js, teamroute.js           | Developed all team-related features—team creation, joining, adding members, and related routes/controllers/models. |
+| *Aastha*  | taskcontroller.js, task.js, taskroute.js           | Managed the entire task workflow: create, assign, update, and move tasks between statuses; ensured each task is well-logged and linkable to users. |
+
+> *We worked by splitting each domain/module, built it locally, created feature branches, and then pushed code in parts to keep project history clear.*
+
+---
+
+## 🎯 Assignment Process & Best Practices
+
+- We started with a team discussion and sketched out our database models and API routes.
+- We set up a shared GitHub repository with a distinct branch for each feature/module.
+- Everyone worked daily on their domain and made frequent, clear commits.
+- PRs (Pull Requests) were made feature-wise to keep project integration smooth.
+- *For transparency*, every action (task assignment, status change) is logged via the activity log.
+
+---
+
+## 🚀 Next Steps (Planned)
+
+- *Nodemailer* for email notifications
+- *Socket.io* for real-time user updates
+- Additional features and improvement based on feedback
+
+---
+
+## 👥 Team Credits
+
+- *Aastha Bhatia*
+- *Pranshu* (Leader)
+- *Krishna Mehta*
+- *Paras*
