@@ -1,6 +1,7 @@
 import Task from "../models/Task.js";
 import Project from "../models/Project.js";
 import Team from "../models/Team.js";
+import { createLog } from "./activityLogcontroller.js";
 
 export const createTask = async (req, res) => {
   try {
@@ -26,6 +27,16 @@ export const createTask = async (req, res) => {
     });
 
     await task.save();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Create Task",
+      "Task",
+      task._id,
+      `${req.user.name} created task "${task.title}" in project "${project.name}"`
+    );
+
     res.status(201).json({ message: "Task created", task });
   } catch (error) {
     res.status(500).json({ message: "Error creating task", error: error.message });
@@ -82,6 +93,16 @@ export const updateTask = async (req, res) => {
     if (status) task.status = status;
 
     await task.save();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Update Task",
+      "Task",
+      task._id,
+      `${req.user.name} updated task "${task.title}"`
+    );
+
     res.status(200).json({ message: "Task updated", task });
   } catch (error) {
     res.status(500).json({ message: "Error updating task", error: error.message });
@@ -107,6 +128,16 @@ export const deleteTask = async (req, res) => {
     }
 
     await task.deleteOne();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Delete Task",
+      "Task",
+      task._id,
+      `${req.user.name} deleted task "${task.title}"`
+    );
+
     res.status(200).json({ message: "Task deleted" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting task", error: error.message });
@@ -128,6 +159,15 @@ export const updateTaskStatus = async (req, res) => {
 
     task.status = status;
     await task.save();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Update Task Status",
+      "Task",
+      task._id,
+      `${req.user.name} changed status of task "${task.title}" to "${status}"`
+    );
 
     res.status(200).json({ message: "Task status updated", task });
   } catch (error) {

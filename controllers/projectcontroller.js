@@ -1,5 +1,6 @@
 import Project from "../models/Project.js";
 import Team from "../models/Team.js";
+import { createLog } from "./activityLogcontroller.js";
 
 export const createProject = async (req, res) => {
   try {
@@ -21,6 +22,16 @@ export const createProject = async (req, res) => {
     });
 
     await project.save();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Create Project",
+      "Project",
+      project._id,
+      `${req.user.name} created project "${project.name}"`
+    );
+
     res.status(201).json({ message: "Project created", project });
   } catch (error) {
     res.status(500).json({ message: "Error creating project", error: error.message });
@@ -61,6 +72,16 @@ export const updateProject = async (req, res) => {
     project.description = description || project.description;
 
     await project.save();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Update Project",
+      "Project",
+      project._id,
+      `${req.user.name} updated project "${project.name}"`
+    );
+
     res.status(200).json({ message: "Project updated", project });
   } catch (error) {
     res.status(500).json({ message: "Error updating project", error: error.message });
@@ -79,6 +100,16 @@ export const deleteProject = async (req, res) => {
     }
 
     await project.deleteOne();
+
+    // Log activity
+    await createLog(
+      req.user.id,
+      "Delete Project",
+      "Project",
+      project._id,
+      `${req.user.name} deleted project "${project.name}"`
+    );
+
     res.status(200).json({ message: "Project deleted" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting project", error: error.message });

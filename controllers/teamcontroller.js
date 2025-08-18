@@ -1,5 +1,6 @@
 import Team from "../models/Team.js";
 import User from "../models/User.js";
+import { createLog } from "./activityLogcontroller.js";
 
 // Create new team
 export const createTeam = async (req, res) => {
@@ -14,6 +15,16 @@ export const createTeam = async (req, res) => {
     });
 
     await team.save();
+
+    // Log activity
+    await createLog(
+      userId,
+      "Create Team",
+      "Team",
+      team._id,
+      `${req.user.name} created team "${team.name}"`
+    );
+
     res.status(201).json({ message: "Team created successfully", team });
   } catch (error) {
     res.status(500).json({ message: "Error creating team", error: error.message });
@@ -31,6 +42,15 @@ export const joinTeam = async (req, res) => {
     if (!team.members.includes(userId)) {
       team.members.push(userId);
       await team.save();
+
+      // Log activity
+      await createLog(
+        userId,
+        "Join Team",
+        "Team",
+        team._id,
+        `${req.user.name} joined team "${team.name}"`
+      );
     }
 
     res.status(200).json({ message: "Joined team successfully", team });
